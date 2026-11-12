@@ -358,6 +358,12 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
       </div>
     </div>
 
+    <div class="card">
+      <h2>90-Day Success Plan</h2>
+      <p class="hint">30% technical skills, 70% soft skills — one step a day.</p>
+      <div id="todaySP" style="margin-top:8px"></div>
+    </div>
+
     <div class="stats">
       <div class="stat"><div class="k">Cash in · today</div><div class="v" id="stIn">Rs 0</div><div class="d">Money that came in</div></div>
       <div class="stat"><div class="k">Cash out · today</div><div class="v" id="stOut">Rs 0</div><div class="d">Personal + your share</div></div>
@@ -498,7 +504,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
   <!-- ============ GOALS & IDEAS ============ -->
   <section class="view" id="view-goals">
     <div class="vhead"><div><h1>Goals &amp; Ideas</h1></div><button class="btn primary" data-add="goal">+ New goal</button></div>
-    <div class="tabs"><button class="tab on" data-gtab="goals">Goals</button><button class="tab" data-gtab="ideas">Idea bank</button><button class="tab" data-gtab="notes">Notes</button></div>
+    <div class="tabs"><button class="tab on" data-gtab="goals">Goals</button><button class="tab" data-gtab="ideas">Idea bank</button><button class="tab" data-gtab="notes">Notes</button><button class="tab" data-gtab="plan">90-Day Plan</button></div>
     <div id="gpane-goals"><div id="goalList"></div></div>
     <div id="gpane-ideas" style="display:none">
       <div class="pickrow" id="ideaFilters" style="margin-bottom:12px"></div>
@@ -515,6 +521,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
       <div style="margin-bottom:12px"><button class="btn" data-add="note">+ Full note / checklist note</button></div>
       <div id="noteList"></div>
     </div>
+    <div id="gpane-plan" style="display:none"><div id="spMain"></div></div>
   </section>
 
   <!-- ============ COACH ============ -->
@@ -599,7 +606,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
       <div style="margin-top:12px"><button class="btn primary" id="saveSettings">Save settings</button></div>
     </div>
 
-    <div class="card"><h2>Backup &amp; restore</h2><p class="hint">Everything — non-negotiables (with their times, durations, cues and floors), day log, streaks, challenge, North Star, prayers, evening shutdowns, envelopes, accountability partner, M.A.S.T.E.R. scorecards, timetable, voice alarms and voice settings, money, goals, ideas, notes, tasks, Coach chat, approved Coach memory notes and saved weekly summaries — in one file. SmartLife now auto-saves on this device as you go (see the app card below), so you no longer have to download before closing; this file is your portable copy — keep one for safety, and use Import on a new phone to bring it all back exactly. Coach API keys are never in the backup — they live only in the open session, by design.</p>
+    <div class="card"><h2>Backup &amp; restore</h2><p class="hint">Everything — non-negotiables (with their times, durations, cues and floors), day log, streaks, challenge, North Star, prayers, evening shutdowns, envelopes, accountability partner, M.A.S.T.E.R. scorecards, 90-day success plan, timetable, voice alarms and voice settings, money, goals, ideas, notes, tasks, Coach chat, approved Coach memory notes and saved weekly summaries — in one file. SmartLife now auto-saves on this device as you go (see the app card below), so you no longer have to download before closing; this file is your portable copy — keep one for safety, and use Import on a new phone to bring it all back exactly. Coach API keys are never in the backup — they live only in the open session, by design.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
         <button class="btn primary" id="exportBtn">Download backup (.json)</button>
         <label class="btn" for="importFile" style="cursor:pointer">Import backup</label>
@@ -740,7 +747,7 @@ function defaultEnvelopes(){ return [
 var S = {
   people:[], groups:[{id:"g-hostel",name:"Hostel",memberIds:[]},{id:"g-uni",name:"University Friends",memberIds:[]}],
   shared:[], personal:[], goals:[], ideas:[], notes:[], tasks:[], blocks:[], focus:[], reminders:[],
-  nonneg:defaultNonneg(), daylog:{}, challenge:null, anchor:defaultAnchor(),
+  nonneg:defaultNonneg(), daylog:{}, challenge:null, successPlan:{start:null,done:{},skills:{}}, anchor:defaultAnchor(),
   mtargets:[], ygoals:[], settings:{wake:"05:00",sleep:"22:30"},
   valarms:[], valarmOff:{}, voice:{enabled:false,lang:"en",rate:"1",wake:false},
   partner:{name:"",note:""}, northStar:"", weekHabit:"", votes:0,
@@ -785,7 +792,7 @@ function tabWire(btnSel,attr,panePrefix,panes){
   }); });
 }
 tabWire("[data-mtab]","mtab","mpane-",["shared","personal","people","groups"]);
-tabWire("[data-gtab]","gtab","gpane-",["goals","ideas","notes"]);
+tabWire("[data-gtab]","gtab","gpane-",["goals","ideas","notes","plan"]);
 tabWire("[data-ptab]","ptab","ppane-",["day","week","month","year","tasks","alerts","reminders"]);
 
 /* ---------------- discipline engine ---------------- */
@@ -844,6 +851,272 @@ function challengeDay(){
   if(!S.challenge||!S.challenge.start) return 0;
   var diff=Math.floor((new Date(todayStr()+"T00:00:00")-new Date(S.challenge.start+"T00:00:00"))/86400000)+1;
   return Math.max(0,diff);
+}
+
+/* ---------------- 90-Day Success Plan (Abidi 30/70) ---------------- */
+/* 6 soft-skill areas named in the reel; 90 single-line steps, original
+   wording, rotating through the areas (day d -> area (d-1)%6). No weekly
+   module names — weeks are just Week 1..13. */
+var SP_AREAS=[
+  {key:"comm",label:"Communication"},
+  {key:"pres",label:"Presenting"},
+  {key:"goals",label:"Goals"},
+  {key:"rel",label:"Relationships"},
+  {key:"sales",label:"Sales"},
+  {key:"time",label:"Time Management"}
+];
+var SP_STEPS={
+  comm:[
+    "Speak one full sentence in English out loud, clearly, before breakfast.",
+    "Listen to one person fully today — no interrupting, no phone in hand.",
+    "Ask one open question in a conversation and listen to the whole answer.",
+    "Record yourself speaking for 60 seconds, play it back, note one thing to fix.",
+    "Explain one idea from your course to a friend in under 2 minutes.",
+    "Write one clear message today — short, one point, no extra words.",
+    "Greet three people by name today and ask how they are.",
+    "Practise one difficult sentence 5 times until it sounds natural.",
+    "In one conversation, repeat back what the other person said before you reply.",
+    "Tell one story from your week in under 60 seconds, with a clear start and end.",
+    "Give one piece of honest feedback today — kind, specific, useful.",
+    "Ask a teacher or senior one question you have been avoiding.",
+    "Speak up once in class or a group — one comment, one question, or one answer.",
+    "Read one page out loud today, slowly, pronouncing every word.",
+    "Have one 10-minute conversation in English only — no switching to Urdu."
+  ],
+  pres:[
+    "Stand tall for 2 minutes and say your name and one goal out loud.",
+    "Present one idea to a mirror: 3 points, 60 seconds, no notes.",
+    "Record a 1-minute video of yourself presenting one point; watch it once.",
+    "Practise one opening line for a talk until it sounds confident.",
+    "Present your idea to one friend and ask: what was clear, what was not?",
+    "Stand and speak for 2 minutes on any topic — no notes, no phone.",
+    "Pick one body-language fix today (eye contact, still hands, slow pace) and use it once.",
+    "Present one topic from your course to a friend as if you are teaching it.",
+    "Record yourself again and compare with your first video — note one improvement.",
+    "Present to a small group (3 or more people) for 3 minutes.",
+    "Prepare a 5-minute talk outline: opening, 3 points, closing.",
+    "Deliver that 5-minute talk to a friend or family member.",
+    "After presenting, ask the listener two questions: what landed, what was missing?",
+    "Present without reading from a screen — speak from 3 bullet points only.",
+    "Give one real presentation — in class, in a group, or on a video call."
+  ],
+  goals:[
+    "Write your 90-day North Star in one sentence.",
+    "Break the North Star into 3 milestones for the next 30 days.",
+    "Pick the single most important goal for this week and write it down.",
+    "Write tomorrow's first task tonight — the one that matters most.",
+    "Review your goals list and delete one that no longer matters.",
+    "Set one measurable target for the week — a number, a date, a count.",
+    "Break one big goal into 3 steps you can start in under 2 minutes each.",
+    "Write down one goal you are avoiding — and the smallest first step for it.",
+    "Check your progress on each goal and update the percentage honestly.",
+    "Set a deadline for one goal that has been floating without one.",
+    "Plan the next 7 days: one goal per day, written down.",
+    "Review the last 30 days — what moved, what stalled, and why.",
+    "Write one goal for the 90 days after this plan ends.",
+    "Tell one person your main goal out loud — saying it makes it real.",
+    "Do an after-action review of the whole 90 days: what worked, what failed, what is next."
+  ],
+  rel:[
+    "Call home today — 5 honest minutes with family.",
+    "Thank one person today, specifically, for something they did.",
+    "Ask a friend how they really are — and listen to the answer.",
+    "Help one person with something small today, without being asked.",
+    "Reconnect with one old friend or classmate — one message.",
+    "Apologise for one thing you got wrong — quickly, honestly, once.",
+    "Introduce two people who should know each other.",
+    "Spend 10 minutes with a friend with your phone away.",
+    "Ask one person for advice on something you are working on.",
+    "Remember one detail about a friend and ask about it next time.",
+    "Offer help to a classmate who is struggling with a topic.",
+    "Keep one promise you made today — small promises build trust.",
+    "Give one genuine compliment today — specific, not generic.",
+    "Listen to a friend's problem for 10 minutes without offering a fix.",
+    "Write down the 3 people who matter most and one way to invest in each."
+  ],
+  sales:[
+    "Write one sentence that explains what you offer and who it helps.",
+    "List 3 people who might need what you can do — and why.",
+    "Practise saying your offer out loud in 30 seconds.",
+    "Ask one person what problem they are facing right now.",
+    "Write down 3 objections people might have — and one honest answer for each.",
+    "Offer your help to one person today — no pressure, just the offer.",
+    "Follow up with one person you spoke to before — one message.",
+    "Write one short message that presents your work without sounding salesy.",
+    "Ask a customer or friend what they liked most about your work.",
+    "Practise hearing \"no\" — hear it once today and stay calm.",
+    "Price one thing you do — write the number down and say it out loud.",
+    "Ask one person to recommend you to someone else.",
+    "Close one small deal today — even a tiny one counts.",
+    "Write down what you learned from one rejection this week.",
+    "Review your sales week: how many offers, how many yeses, one fix for next week."
+  ],
+  time:[
+    "Write tomorrow's top 3 tasks tonight.",
+    "Do the hardest task first today — before anything easy.",
+    "Use one 25-minute focus block today, phone in another room.",
+    "Track where your time went today — one honest line.",
+    "Cut one time-waster today — one app, one scroll, one habit.",
+    "Plan your day in blocks: one line per block, times included.",
+    "Finish one task completely today — no half-finished carry-over.",
+    "Say no to one thing that does not serve your goal today.",
+    "Batch one kind of work today — all messages at once, all study at once.",
+    "Set a hard stop for one activity today and keep it.",
+    "Review your week: which hours were wasted, which were golden?",
+    "Protect one golden hour tomorrow — no phone, no interruptions.",
+    "Do a 10-minute evening shutdown tonight: what got done, what is first tomorrow.",
+    "Time one routine task today — find the faster way to do it.",
+    "Plan next week in 30 minutes: goals, blocks, and one buffer day."
+  ]
+};
+function spEnsure(){
+  if(!S.successPlan||typeof S.successPlan!=="object") S.successPlan={start:null,done:{},skills:{}};
+  if(!S.successPlan.done||typeof S.successPlan.done!=="object") S.successPlan.done={};
+  if(!S.successPlan.skills||typeof S.successPlan.skills!=="object") S.successPlan.skills={};
+  return S.successPlan;
+}
+function spDay(){
+  var sp=spEnsure(); if(!sp.start) return 0;
+  var diff=Math.floor((new Date(todayStr()+"T00:00:00")-new Date(sp.start+"T00:00:00"))/86400000)+1;
+  return Math.max(0,diff);
+}
+function spStep(day){
+  var a=SP_AREAS[(day-1)%6];
+  return {area:a,text:SP_STEPS[a.key][Math.floor((day-1)/6)]};
+}
+function spWeekOf(day){ return Math.min(13,Math.ceil(day/7)); }
+function spDoneCount(){
+  var sp=spEnsure();
+  return Object.keys(sp.done).filter(function(k){ return sp.done[k]; }).length;
+}
+/* Chain over plan days — same Never-Miss-Twice grace as currentStreak:
+   1 missed day = gap, 2 in a row = chain breaks. Only days up to today. */
+function spChain(){
+  var sp=spEnsure(); if(!sp.start) return 0;
+  var cd=Math.min(spDay(),90); if(cd<1) return 0;
+  var n=0,gaps=0,d=cd;
+  if(!sp.done[d]) d--;
+  while(d>=1){
+    if(sp.done[d]){ n++; d--; continue; }
+    if(n>0&&gaps===0){ gaps=1; d--; continue; }
+    break;
+  }
+  return n;
+}
+/* Skill streak — same rule as nnItemStreak over per-area date-keyed check-ins. */
+function spSkillStreak(key){
+  var sp=spEnsure();
+  function ticked(s){ return !!(sp.skills[key]&&sp.skills[key][s]); }
+  function logged(s){ return !!S.daylog[s]; }
+  var s=todayStr(),n=0,gaps=0;
+  if(!ticked(s)) s=plusDays(s,-1);
+  while(true){
+    if(ticked(s)){ n++; s=plusDays(s,-1); continue; }
+    if(logged(s)&&n>0&&gaps===0){ gaps=1; s=plusDays(s,-1); continue; }
+    break;
+  }
+  return n;
+}
+function spSkillCount(key){
+  var sp=spEnsure();
+  return sp.skills[key]?Object.keys(sp.skills[key]).filter(function(d){ return sp.skills[key][d]; }).length:0;
+}
+function spAreaLabel(key){
+  for(var i=0;i<SP_AREAS.length;i++) if(SP_AREAS[i].key===key) return SP_AREAS[i].label;
+  return key;
+}
+function spToggleSkill(key){
+  var sp=spEnsure(); var t=todayStr();
+  if(!sp.skills[key]) sp.skills[key]={};
+  if(sp.skills[key][t]) delete sp.skills[key][t];
+  else sp.skills[key][t]=true;
+  toast(sp.skills[key][t]?("Practised today: "+spAreaLabel(key)):"Check-in removed");
+  renderAll();
+}
+/* Only the current day can be ticked — past days are frozen (done or
+   missed), future days are locked. Same consequence pattern as the
+   non-negotiables: a missed day feeds the chain's grace rule. */
+function spToggleDay(day){
+  var sp=spEnsure(); var cd=spDay();
+  if(day!==cd||cd<1||cd>90) return;
+  if(sp.done[day]) delete sp.done[day];
+  else sp.done[day]=true;
+  toast(sp.done[day]?("Day "+day+" done — chain: "+spChain()+" days"):("Day "+day+" unticked"));
+  renderAll();
+}
+function renderSuccessPlan(){
+  var box=$("spMain"); if(!box) return;
+  var sp=spEnsure(); var cd=spDay();
+  var html="";
+  html+='<div class="card hot"><h2>90-Day Success Plan</h2>'+
+    '<div style="display:flex;align-items:baseline;gap:14px;margin-top:6px;flex-wrap:wrap"><span class="streakbig" style="font-size:30px">30% <span style="font-size:15px;color:var(--muted)">technical</span></span><span class="streakbig" style="font-size:30px;color:var(--primary)">70% <span style="font-size:15px;color:var(--muted)">soft skills</span></span></div>'+
+    '<p class="hint" style="margin-top:6px">Abidi\'s 30/70 principle — success is 30% technical skills, 70% soft skills. This plan works the 70%: 6 areas, one small step a day, 90 days in order.</p></div>';
+  if(!sp.start){
+    html+=emptyState("Not started yet","Tap start and Day 1 begins today. One step a day, in order — 90 days, 6 soft-skill areas, rotating. The chain counts days done; 1 miss is a gap, 2 in a row breaks it.",'<button class="btn primary" id="spStartBtn">Start Day 1 today</button>');
+    box.innerHTML=html;
+    var sb=$("spStartBtn");
+    if(sb) sb.addEventListener("click",function(){ sp.start=todayStr(); sp.done={}; toast("Day 1 starts today — one step, one check-in"); renderAll(); });
+    return;
+  }
+  var doneN=spDoneCount();
+  var wk=cd>90?13:Math.max(1,spWeekOf(Math.max(1,cd)));
+  var pct=Math.min(100,Math.round(Math.min(cd,90)/90*100));
+  html+='<div class="card"><div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><span class="streakbig" style="font-size:32px">Day '+Math.min(cd,90)+'</span><span class="hint">of 90 · Week '+wk+' of 13 · started '+fmtDate(sp.start)+'</span></div>'+
+    '<div class="bar"><i style="width:'+pct+'%"></i></div>'+
+    '<p class="hint" style="margin-top:6px">Chain: <strong>'+spChain()+' days</strong> · '+doneN+' of 90 days done · 1 miss = gap, 2 in a row = chain breaks.</p>'+
+    (cd>90?'<div class="caveat" style="margin-top:8px"><strong>Day 90 — After-Action Review:</strong> write what worked and what failed in Notes, set a new North Star, start the next cycle.</div>':"")+
+    '<button class="linkish" id="spEndBtn">End plan</button></div>';
+  var t=todayStr();
+  html+='<div class="card"><h2>Soft skills — practise today</h2><p class="hint">Tap when you practised it today. Streak follows the same rule as your non-negotiables.</p>'+
+    SP_AREAS.map(function(a){
+      var sk=sp.skills[a.key]||{}; var doneToday=!!sk[t];
+      return '<div class="nnrow"><button class="nnbtn'+(doneToday?" done":"")+'" data-spskill="'+a.key+'" aria-label="Practised '+a.label+' today">'+(doneToday?"✓":"")+'</button><div class="grow"><div class="t">'+a.label+'</div><div class="s" style="color:var(--muted);font-size:13px">Streak '+spSkillStreak(a.key)+'d · '+spSkillCount(a.key)+' check-ins total</div></div></div>';
+    }).join("")+'</div>';
+  if(!window._spWeek) window._spWeek=wk;
+  var showWk=Math.min(13,Math.max(1,window._spWeek));
+  var rows="";
+  var startD=(showWk-1)*7+1, endD=Math.min(90,showWk*7);
+  for(var d=startD;d<=endD;d++){
+    var st=spStep(d);
+    var isToday=d===cd&&cd<=90, isPast=d<cd, isDone=!!sp.done[d], isFuture=d>cd;
+    rows+='<div class="tlrow'+(isToday?" now":"")+'"><div class="time">Day '+d+'</div><div class="grow"><div class="t" style="font-size:14px">'+esc(st.text)+'</div><div class="s"><span class="chip hot">'+st.area.label+'</span>'+(isDone?' <span class="chip green">Done</span>':isPast?' <span class="chip red">Missed</span>':isToday?' <span class="chip amber">Today</span>':"")+'</div></div>'+
+      '<button class="nnbtn'+(isDone?" done":"")+'" data-spday="'+d+'"'+(isToday?"":' disabled style="opacity:.4"')+' aria-label="Tick day '+d+'">'+(isDone?"✓":"")+'</button></div>';
+  }
+  var chips="";
+  for(var w=1;w<=13;w++) chips+='<button type="button" class="pick'+(w===showWk?" on":"")+'" data-spweek="'+w+'">Week '+w+'</button>';
+  html+='<div class="card"><h2>Road map — 90 days, in order</h2><p class="hint">One step a day, rotating through the 6 areas. Only today can be ticked — past days are frozen, future days are locked.</p>'+
+    '<div class="pickrow" style="margin-top:10px">'+chips+'</div>'+
+    '<div style="margin-top:8px">'+rows+'</div></div>';
+  box.innerHTML=html;
+  box.querySelectorAll("[data-spskill]").forEach(function(b){ b.addEventListener("click",function(){ spToggleSkill(b.getAttribute("data-spskill")); }); });
+  box.querySelectorAll("[data-spday]").forEach(function(b){ b.addEventListener("click",function(){ spToggleDay(Number(b.getAttribute("data-spday"))); }); });
+  box.querySelectorAll("[data-spweek]").forEach(function(b){ b.addEventListener("click",function(){ window._spWeek=Number(b.getAttribute("data-spweek")); renderGoals(); }); });
+  var eb=$("spEndBtn");
+  if(eb) eb.addEventListener("click",function(){ sp.start=null; sp.done={}; window._spWeek=1; toast("90-day plan ended"); renderAll(); });
+}
+function renderTodaySP(){
+  var box=$("todaySP"); if(!box) return;
+  var sp=spEnsure(); var cd=spDay(); var t=todayStr();
+  if(!sp.start){
+    box.innerHTML='<p class="hint">The 90-Day Success Plan works the soft skills — 30% technical, 70% soft skills. Start it when you are ready.</p><div style="margin-top:10px"><button class="btn primary" id="todaySPStart">Start Day 1 today</button></div>';
+    var sb=$("todaySPStart");
+    if(sb) sb.addEventListener("click",function(){ sp.start=todayStr(); sp.done={}; toast("Day 1 starts today — one step, one check-in"); renderAll(); });
+    return;
+  }
+  var st=(cd>=1&&cd<=90)?spStep(cd):null;
+  var doneToday=(cd>=1&&cd<=90)?!!sp.done[cd]:false;
+  var html='<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><span style="font-weight:900;font-size:19px">Day '+Math.min(cd,90)+' of 90</span><span class="hint">Chain '+spChain()+' days</span></div>';
+  if(st){
+    html+='<div class="row" style="margin-top:6px"><div class="grow"><div class="t" style="font-size:14.5px">'+esc(st.text)+'</div><div class="s"><span class="chip hot">'+st.area.label+'</span></div></div><button class="nnbtn'+(doneToday?" done":"")+'" id="todaySPDay" aria-label="Tick today\'s step">'+(doneToday?"✓":"")+'</button></div>';
+  } else {
+    html+='<p class="hint" style="margin-top:6px">Plan complete — 90 days done. Start the next cycle from Goals → 90-Day Plan.</p>';
+  }
+  html+='<p class="secttl" style="margin:12px 0 6px">Soft skills practised today</p>'+
+    '<div class="pickrow">'+SP_AREAS.map(function(a){ var sk=sp.skills[a.key]||{}; return '<button type="button" class="pick'+(sk[t]?" on":"")+'" data-spskill="'+a.key+'">'+a.label+'</button>'; }).join("")+'</div>';
+  box.innerHTML=html;
+  var tb=$("todaySPDay");
+  if(tb) tb.addEventListener("click",function(){ spToggleDay(cd); });
+  box.querySelectorAll("[data-spskill]").forEach(function(b){ b.addEventListener("click",function(){ spToggleSkill(b.getAttribute("data-spskill")); }); });
 }
 function toggleNN(id){
   var log=dayLog(todayStr());
@@ -934,6 +1207,7 @@ function renderAll(){ renderToday(); renderPlan(); renderMoney(); renderGoals();
 
 function renderToday(){
   $("todayDate").textContent = new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  renderTodaySP();
   var t=todayStr(), log=dayLog(t);
   var AL=collectAlerts();
   var urgent=AL.overdue.length+AL.today.length;
@@ -1219,6 +1493,7 @@ function renderMoney(){
 function msNorm(g){ return (g.milestones||[]).map(function(m){ return typeof m==="string"?{text:m,done:false}:m; }); }
 var ideaFilter="All";
 function renderGoals(){
+  renderSuccessPlan();
   $("goalList").innerHTML = S.goals.length===0 ? emptyState("No goals yet","Add a goal — a course, a skill, savings — with milestones, and track it to done.","") :
     S.goals.map(function(g){
       var ms=msNorm(g); var msDone=ms.filter(function(m){return m.done;}).length;
@@ -2039,6 +2314,10 @@ function applyStateData(st){
       ["people","groups","shared","personal","goals","ideas","notes","tasks","blocks","focus","reminders","nonneg","mtargets","ygoals","anchor","valarms"].forEach(function(k){ if(Array.isArray(st[k])) S[k]=st[k]; });
       if(st.daylog&&typeof st.daylog==="object") S.daylog=st.daylog;
       if(st.challenge!==undefined) S.challenge=st.challenge;
+      if(st.successPlan&&typeof st.successPlan==="object") S.successPlan=st.successPlan;
+      if(!S.successPlan||typeof S.successPlan!=="object") S.successPlan={start:null,done:{},skills:{}};
+      if(!S.successPlan.done||typeof S.successPlan.done!=="object") S.successPlan.done={};
+      if(!S.successPlan.skills||typeof S.successPlan.skills!=="object") S.successPlan.skills={};
       if(st.settings&&typeof st.settings==="object") S.settings=st.settings;
       if(st.valarmOff&&typeof st.valarmOff==="object") S.valarmOff=st.valarmOff;
       if(st.voice&&typeof st.voice==="object") S.voice=st.voice;
