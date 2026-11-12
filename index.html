@@ -285,7 +285,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
 
     <div class="voicebanner" id="voiceBanner">
       <h2>Voice assistant — rings &amp; speaks</h2>
-      <p class="hint" id="voiceStatus">Voice is off. Turn it on once and keep SmartLife open in the background — it rings and speaks at each block, no internet needed.</p>
+      <p class="hint" id="voiceStatus">Voice is off. Turn it on once.</p>
       <div class="next" id="voiceNext">No alarm times set</div>
       <p class="hint" id="voiceCountdown"></p>
       <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:10px">
@@ -299,7 +299,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
       <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
         <div style="flex:1;min-width:210px">
           <h2>Non-negotiables</h2>
-          <p class="hint">The small set you do every day, no matter what — the list decides, you just tick. One missed day never resets your streak; only two in a row does.</p>
+          <p class="hint">1 miss = gap. 2 in a row = streak breaks.</p>
           <div style="margin-top:10px;display:flex;gap:9px;flex-wrap:wrap"><button class="btn primary" data-add="nnitem">+ Add non-negotiable</button><button class="btn" data-add="nonneg">Bulk edit (text list)</button></div>
           <div id="nnList"></div>
           <p class="hint" id="nnProgress" style="margin-top:10px;font-weight:700"></p>
@@ -317,7 +317,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
 
     <div class="card">
       <h2>Coach &amp; this week</h2>
-      <p class="hint" id="coachTeaser">Your week at a glance, what Coach has learned about your patterns, and one honest suggestion.</p>
+      <p class="hint" id="coachTeaser"></p>
       <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:10px">
         <button class="btn primary" data-goto="coach">Open Coach</button>
         <button class="btn" id="teaserSummaryBtn">Read this week's summary</button>
@@ -328,14 +328,14 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
     <div class="grid c2">
       <div class="card">
         <h2>Morning Priming — 10 minutes</h2>
-        <p class="hint">Abidi's Phase 1 ritual (90 Days Success Plan): read your North Star, remember why, then start. No motivation needed — the ritual starts the day, not a feeling.</p>
-        <div class="field" style="margin-top:10px"><label for="northStarInput">My 90-day North Star — one vivid, present-tense sentence</label><input id="northStarInput" type="text" placeholder="e.g. I am a disciplined student who prays on time and finishes what he starts"></div>
-        <div class="field"><label for="weekHabitInput">This week's ONE new habit (Abidi: one habit per week, 12 habits in 12 weeks)</label><input id="weekHabitInput" type="text" placeholder="e.g. Week 3 habit: 2-minute Quran after Fajr"></div>
+        <p class="hint">Read your North Star, then start.</p>
+        <div class="field" style="margin-top:10px"><label for="northStarInput">My 90-day North Star</label><input id="northStarInput" type="text" placeholder="e.g. I am a disciplined student who prays on time and finishes what he starts"></div>
+        <div class="field"><label for="weekHabitInput">This week's ONE new habit</label><input id="weekHabitInput" type="text" placeholder="e.g. Week 3 habit: 2-minute Quran after Fajr"></div>
         <div id="primingBox"></div>
       </div>
       <div class="card">
         <h2>Prayers today</h2>
-        <p class="hint">Tap each prayer: On time, Late, or Missed. Deen sits inside the daily loop — not in a separate app. On-time count feeds your weekly review.</p>
+        <p class="hint">Tap: On time / Late / Missed.</p>
         <div id="prayerBox" style="margin-top:6px"></div>
         <p class="hint" id="prayerSummary" style="margin-top:8px;font-weight:700"></p>
       </div>
@@ -374,14 +374,14 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
 
     <div class="card">
       <h2>Evening shutdown — 3 questions</h2>
-      <p class="hint">Close the day on paper, not in your head. Plus the environment check (James Clear: environment design beats willpower) — set tomorrow's cues tonight.</p>
+      <p class="hint">Set tomorrow's cues tonight.</p>
       <div id="eveningBox"></div>
     </div>
 
     <div class="card">
       <h2>Focus timer</h2>
       <p class="hint">One block at a time. Start it, work, stop it — the minutes are logged against the goal and today. Forest rule: your plant grows while you focus; resetting early withers it. Leaving costs something visible.</p>
-      <div class="foreststage"><div class="ftree" id="forestTree">🌱</div><div class="flbl" id="forestLbl">Seed planted — start a block to grow it</div></div>
+      <div class="foreststage"><div class="ftree" id="forestTree">🌱</div><div class="flbl" id="forestLbl">Not started.</div></div>
       <div class="timerface" id="timerFace">00:00</div>
       <div class="field"><label for="timerGoal">Working on</label><select id="timerGoal"></select></div>
       <div style="display:flex;gap:10px"><button class="btn primary" id="timerToggle" style="flex:1;justify-content:center">Start focus</button><button class="btn" id="timerReset">Reset</button></div>
@@ -389,19 +389,19 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
     </div>
 
     <div class="grid c2">
-      <div class="card"><h2>Who owes whom</h2><p class="hint">Across all groups combined.</p><div id="dashBalances"></div></div>
+      <div class="card"><h2>Who owes whom</h2><div id="dashBalances"></div></div>
       <div class="card"><h2>This week — non-negotiables</h2><p class="hint">Completion per day, last 7 days.</p><div class="wkbar" id="weekBars"></div><div id="weekPct" class="hint" style="margin-top:8px;font-weight:700"></div></div>
     </div>
     <div class="grid c2">
       <div class="card"><h2>Focus by goal</h2><p class="hint">Total logged minutes per goal.</p><div id="focusByGoal" style="margin-top:8px"></div></div>
-      <div class="card"><h2>Money by category — this month</h2><p class="hint">Personal expenses + shared bills, by category.</p><div id="moneyByCat" style="margin-top:8px"></div></div>
+      <div class="card"><h2>Money by category — this month</h2><div id="moneyByCat" style="margin-top:8px"></div></div>
     </div>
     <div class="card"><h2>Goals in progress</h2><div id="dashGoals"></div></div>
   </section>
 
   <!-- ============ PLAN ============ -->
   <section class="view" id="view-plan">
-    <div class="vhead"><div><h1>Planner</h1><p class="sub">Plan first: the day runs on the timetable, not on how you feel. Day, week, month and year — one system.</p></div><button class="btn primary" data-add="block">+ Week block</button></div>
+    <div class="vhead"><div><h1>Planner</h1></div><button class="btn primary" data-add="block">+ Week block</button></div>
     <div class="tabs">
       <button class="tab on" data-ptab="day">Day</button>
       <button class="tab" data-ptab="week">Week</button>
@@ -415,12 +415,12 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
       <div class="pickrow" id="dayChips" style="margin-bottom:12px"></div>
       <div id="dayList"></div>
       <div class="card"><h2>Replan — missed blocks roll forward</h2>
-        <p class="hint">Copied from Structured's Replan: a missed block is not a failed day. Roll it to the next free slot — with the smaller floor version offered first.</p>
+        <p class="hint">Missed blocks roll to the next free slot, floor version first.</p>
         <div id="replanBox" style="margin-top:8px"></div>
       </div>
       <div class="card">
         <h2>Daily anchor timetable</h2>
-        <p class="hint">These blocks repeat every day, Fajr to Isha — prayers, walk, exercise, study blocks, university, family, rest. Edit any time; the timeline follows.</p>
+        <p class="hint">Repeats every day, Fajr to Isha. Edit any time.</p>
         <div id="anchorList" style="margin-top:6px"></div>
         <div style="margin-top:12px"><button class="btn primary" data-add="anchor">+ Anchor block</button></div>
       </div>
@@ -448,7 +448,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
 
   <!-- ============ MONEY ============ -->
   <section class="view" id="view-money">
-    <div class="vhead"><div><h1>Money</h1><p class="sub">Cash in, cash out, and who owes whom — hostel and university friends kept in separate groups, one combined total.</p></div><button class="btn primary" data-add="shared">+ Shared expense</button></div>
+    <div class="vhead"><div><h1>Money</h1></div><button class="btn primary" data-add="shared">+ Shared expense</button></div>
     <div class="stats">
       <div class="stat"><div class="k">Cash in · today</div><div class="v" id="mInToday">Rs 0</div></div>
       <div class="stat"><div class="k">Cash out · today</div><div class="v" id="mOutToday">Rs 0</div></div>
@@ -463,11 +463,11 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
     </div>
     <div id="mpane-shared">
       <div class="field" style="max-width:320px"><label for="groupFilter">Show balances for</label><select id="groupFilter"></select></div>
-      <div class="card"><h2>Balances</h2><p class="hint">Live balances in Rs. Positive means the group owes them. Sponsorships are gifts — they never create a debt.</p><div id="balances"></div><div id="settleBox"></div></div>
+      <div class="card"><h2>Balances</h2><p class="hint">Positive = the group owes them. Sponsorships never create a debt.</p><div id="balances"></div><div id="settleBox"></div></div>
       <p class="secttl">History — expenses, transfers &amp; sponsorships</p><div id="sharedList"></div>
     </div>
     <div id="mpane-groups" style="display:none">
-      <div class="card"><h2>Groups</h2><p class="hint">Each group keeps its own hisaab — hostel separate from university friends — while Today and the position above always show the combined total.</p>
+      <div class="card"><h2>Groups</h2>
       <div id="groupList"></div>
       <div class="field" style="margin-top:12px"><label for="newGroup">New group name</label><input id="newGroup" type="text" placeholder="e.g. Trip Fund, Cricket Team" autocomplete="off"></div>
       <div class="field"><label>Members (tap to include)</label><div class="pickrow" id="groupMembers"></div></div>
@@ -489,7 +489,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
       <div id="personalList"></div>
     </div>
     <div id="mpane-people" style="display:none">
-      <div class="card"><h2>People in the split</h2><p class="hint">Add yourself first, then your friends. Shared expenses split between the people you pick.</p>
+      <div class="card"><h2>People in the split</h2>
       <div id="peopleList"></div>
       <div class="frow" style="margin-top:12px"><div class="field" style="margin:0"><label for="newPerson">Name</label><input id="newPerson" type="text" placeholder="e.g. Ahmed" autocomplete="off"></div><div style="display:flex;align-items:flex-end"><button class="btn primary" id="addPersonBtn" style="width:100%;justify-content:center">Add person</button></div></div></div>
     </div>
@@ -497,7 +497,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
 
   <!-- ============ GOALS & IDEAS ============ -->
   <section class="view" id="view-goals">
-    <div class="vhead"><div><h1>Goals &amp; Ideas</h1><p class="sub">Small targets, tracked to done. Ideas are written down the moment they come — sorted, safe, and ready when you are.</p></div><button class="btn primary" data-add="goal">+ New goal</button></div>
+    <div class="vhead"><div><h1>Goals &amp; Ideas</h1></div><button class="btn primary" data-add="goal">+ New goal</button></div>
     <div class="tabs"><button class="tab on" data-gtab="goals">Goals</button><button class="tab" data-gtab="ideas">Idea bank</button><button class="tab" data-gtab="notes">Notes</button></div>
     <div id="gpane-goals"><div id="goalList"></div></div>
     <div id="gpane-ideas" style="display:none">
@@ -506,7 +506,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
       <div id="ideaList"></div>
     </div>
     <div id="gpane-notes" style="display:none">
-      <div class="card"><h2>Quick capture</h2><p class="hint">Get it out of your head first — organise later.</p>
+      <div class="card"><h2>Quick capture</h2>
         <div class="field" style="margin-top:10px"><label for="qcTitle">Title</label><input id="qcTitle" type="text" placeholder="Note title"></div>
         <div class="field"><label for="qcBody">Note</label><textarea id="qcBody" placeholder="Write anything…"></textarea></div>
         <button class="btn primary" id="qcSave">Save note</button>
@@ -519,11 +519,11 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
 
   <!-- ============ COACH ============ -->
   <section class="view" id="view-coach">
-    <div class="vhead"><div><h1>Coach</h1><p class="sub">A free AI coach that works from your own SmartLife data — your non-negotiables, streaks, prayers, focus and money. It advises; it never changes or deletes anything itself.</p></div></div>
+    <div class="vhead"><div><h1>Coach</h1><p class="sub">Advises from your data. Never changes or deletes anything.</p></div></div>
 
     <div class="card hot">
       <h2>Ask Coach</h2>
-      <p class="hint" id="coachStatus">Coach is ready. Online answers need internet; with no internet, Coach answers from your data on this phone instead — no fake “live” answers.</p>
+      <p class="hint" id="coachStatus">Coach is ready. Offline: answers from your data on this phone.</p>
       <div class="pickrow" style="margin-top:10px">
         <button type="button" class="pick" data-coachq="Plan my day from my timetable, non-negotiables and North Star. Give me the order to do things in, with floor versions where I usually slip.">Plan my day</button>
         <button type="button" class="pick" data-coachq="Look at what I keep missing and tell me honestly why, then give me one smaller floor version and one cue change for the weakest one.">Why do I keep missing?</button>
@@ -543,7 +543,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
 
     <div class="card">
       <h2>Weekly summary</h2>
-      <p class="hint">Built only from your own logs on this phone — what got done, what slipped, and one suggestion. Save a copy each week and the history stays below.</p>
+      
       <div id="weekSummaryBox" style="margin-top:8px"></div>
       <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:12px">
         <button class="btn primary" id="saveWeekBtn">Save this week's summary</button>
@@ -555,7 +555,7 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
 
     <div class="card">
       <h2>What Coach has learned — memory</h2>
-      <p class="hint">Coach notices patterns in your done / missed days and <strong>suggests</strong> a short memory note. Nothing is ever saved silently — a note only becomes memory when you tap Approve, and you can edit or delete any note any time. Coach reads these notes before answering.</p>
+      <p class="hint">Nothing saves without your Approve.</p>
       <p class="secttl" style="margin:14px 0 8px">Suggested from your patterns — waiting for your approval</p>
       <div id="coachSuggestions"></div>
       <p class="secttl" style="margin:16px 0 8px">Approved memory</p>
@@ -589,9 +589,9 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
 
   <!-- ============ MORE / SYSTEM ============ -->
   <section class="view" id="view-more">
-    <div class="vhead"><div><h1>System</h1><p class="sub">Settings, backup, and how SmartLife runs on your phone.</p></div></div>
+    <div class="vhead"><div><h1>System</h1><p class="sub">Settings & backup.</p></div></div>
 
-    <div class="card"><h2>Day settings</h2><p class="hint">Your wake and sleep times frame the anchor timetable.</p>
+    <div class="card"><h2>Day settings</h2>
       <div class="frow" style="margin-top:10px">
         <div class="field" style="margin:0"><label for="setWake">Wake up</label><input id="setWake" type="time"></div>
         <div class="field" style="margin:0"><label for="setSleep">Sleep</label><input id="setSleep" type="time"></div>
@@ -609,9 +609,9 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
     </div>
 
     <div class="card hot"><h2>Voice alarms — screen off, phone in pocket</h2>
-      <p class="hint">Your phone stays <strong>on</strong> — screen off, locked, in your pocket, exactly like waiting for a call. SmartLife does not need internet for any of this: the timetable, the ringing and the voice all live on this page.</p>
-      <div class="step"><div class="n">1</div><div><div class="t">Turn voice on &amp; allow notifications</div><div class="s">One tap below unlocks sound and voice (phones block sound until you tap once) and asks for notification permission, so the alarm can also show on your lock screen.</div></div></div>
-      <div class="step"><div class="n">2</div><div><div class="t">Keep SmartLife open in the background</div><div class="s">Open it, then lock the screen or switch apps — do not swipe it away from Recents. While it stays open, its alarm clock tries to ring, vibrate and speak at each block — “This is time for prayer, please wake up”, “This is time for study” — repeating until you tap Dismiss or Snooze, TickTick-style, so one missed notification cannot lose it. Android can pause background pages to save battery, so for a guaranteed wake-up use Keep-awake mode (step 3) or the Clock-app alarms (step 4).</div></div></div>
+      <p class="hint">Phone on, screen off, in your pocket. No internet needed.</p>
+      <div class="step"><div class="n">1</div><div><div class="t">Turn voice on &amp; allow notifications</div><div class="s">One tap unlocks sound, voice and notifications.</div></div></div>
+      <div class="step"><div class="n">2</div><div><div class="t">Keep SmartLife open in the background</div><div class="s">Open it, lock the screen, do not swipe it away. It rings and speaks at each block until you tap Dismiss or Snooze. Android can pause background pages — Keep-awake or the Clock app is the guaranteed path.</div></div></div>
       <div class="step"><div class="n">3</div><div><div class="t">Keep-awake mode for Fajr &amp; study blocks</div><div class="s">Turn on “Keep screen awake” below and SmartLife holds the screen on (Wake Lock) — use it plugged in overnight for Fajr, or during a 40-minute study block. This is the strongest mode a web app can offer.</div></div></div>
       <div class="step"><div class="n">4</div><div><div class="t">If you close the app completely — use your Clock app too</div><div class="s">Honest limit: no web page can ring after you swipe it closed — the API built for that (Notification Triggers) never launched, and a closed page has no voice. So for full safety, copy today’s alarm times into your phone’s built-in Clock app (one tap below, or download the calendar file). The Clock app rings even with the app closed; SmartLife gives it the exact times. A native Android version (Capacitor) is the planned step that removes this limit entirely — same app, plus true closed-app alarms.</div></div></div>
       <div class="frow" style="margin-top:12px">
@@ -628,46 +628,35 @@ input,select,textarea{font-size:16px!important;min-height:48px!important}
         <button class="btn" id="icsBtn">Download alarms (.ics) for Calendar / Clock</button>
         <button class="btn primary" id="lockTestBtn">Test in 1 minute — then lock the screen</button>
       </div>
-      <p class="hint" style="margin-top:8px">The lock-screen test is the research's recommended first validation: tap it, lock the screen with the phone <strong>on</strong> (sleep mode, in your pocket — not powered off), and wait. It should ring and speak in about a minute while SmartLife stays open in the background. If Android pauses it on your phone, Keep-awake mode or the Clock-app times are the guaranteed path on that device — and that result itself tells us your phone needs the Capacitor v2 shell sooner.</p>
+      <p class="hint" style="margin-top:8px">Tap it, then lock the screen. It should ring and speak in about a minute.</p>
     </div>
 
-    <div class="card"><h2>Today’s voice alarms</h2><p class="hint">Built automatically from your anchor timetable, plus your reminders and any custom alarms. Toggle any one off, test it, or add your own line in your own words.</p>
+    <div class="card"><h2>Today’s voice alarms</h2><p class="hint">From your timetable, reminders and custom alarms.</p>
       <div id="valarmList" style="margin-top:6px"></div>
       <div style="margin-top:12px"><button class="btn primary" data-add="valarm">+ Custom voice alarm</button></div>
     </div>
 
     <div class="card hot"><h2>SmartLife as an app — install, offline, auto-save</h2>
-      <p class="hint">SmartLife is a Progressive Web App: install it on your home screen, it opens full-screen like a normal app, it works with no internet, and it saves your data on this device automatically.</p>
+      <p class="hint">Install on your home screen. Works offline. Auto-saves on this device.</p>
       <div id="pwaStatus" style="margin-top:6px"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center">
         <button class="btn primary" id="pwaInstallBtn" style="display:none">Install SmartLife</button>
         <button class="btn" id="pwaRecheckBtn">Re-check status</button>
       </div>
       <div class="step"><div class="n">1</div><div><div class="t">Install it</div><div class="s">Android Chrome: tap <strong>Install SmartLife</strong> above when it appears, or use the ⋮ menu → “Install app” / “Add to Home screen”. iPhone Safari: Share → “Add to Home Screen”. It then opens full-screen, with its own icon and no browser bar.</div></div></div>
-      <div class="step"><div class="n">2</div><div><div class="t">Offline, properly</div><div class="s">A service worker keeps the whole app on your phone, so after the first open with internet, aeroplane mode changes nothing: planner, streaks, money, Coach's on-phone answers, voice and ringing all keep working with zero internet. The status lines above show honestly whether the offline shell is active on this copy.</div></div></div>
-      <div class="step"><div class="n">3</div><div><div class="t">Auto-save on this device</div><div class="s">Every tick, entry and edit is saved to this device's own storage (IndexedDB) as you go — close the app, restart the phone, come back tomorrow: everything is still here. No account, nothing uploaded. The backup file above stays as your portable copy for a new phone. One honest limit: clearing this site's data in the browser, or using a private / incognito window, wipes on-device storage — keep an occasional backup file.</div></div></div>
+      <div class="step"><div class="n">2</div><div><div class="t">Offline, properly</div><div class="s">After the first open with internet, aeroplane mode changes nothing.</div></div></div>
+      <div class="step"><div class="n">3</div><div><div class="t">Auto-save on this device</div><div class="s">Every change saves to this device (IndexedDB). Clearing site data or private mode wipes it — keep an occasional backup.</div></div></div>
       <p class="hint" id="pwaSaveStatus" style="margin-top:8px;font-weight:700"></p>
     </div>
 
     <div class="card"><h2>Accountability partner</h2>
-      <p class="hint">Harkin et al. (2016, <em>Psychological Bulletin</em> — meta-analysis of 138 studies, ~19,951 participants): progress monitoring improves goal attainment, with larger effects when progress is reported to others. Abidi's 90 Days plan pairs this with accountability-partner matching and an Accountability Mirror. Name your partner here, then copy this week's scorecard and send it to them yourself — SmartLife never messages anyone for you.</p>
+      
       <div class="frow" style="margin-top:10px">
         <div class="field" style="margin:0"><label for="partnerName">Partner's name</label><input id="partnerName" type="text" placeholder="e.g. your hostel friend who checks you"></div>
-        <div class="field" style="margin:0"><label for="partnerNote">Self-chosen consequence if you miss twice (no money — a chore, no chai, extra study)</label><input id="partnerNote" type="text" placeholder="e.g. No chill time until the floor versions are done"></div>
+        <div class="field" style="margin:0"><label for="partnerNote">Consequence if you miss twice</label><input id="partnerNote" type="text" placeholder="e.g. No chill time until the floor versions are done"></div>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="btn primary" id="savePartnerBtn">Save partner &amp; consequence</button><button class="btn" id="copyScoreBtn">Copy this week's scorecard for my partner</button></div>
       <div id="masterBox"></div>
-    </div>
-
-    <div class="card"><h2>Why this system is built this way — the research</h2>
-      <p class="hint">Every rule in SmartLife comes from the deep research done for this app on 12 Nov 2026. Confirmed values are shown with their source; hedges and open questions are kept, not hidden.</p>
-      <div class="step"><div class="n">1</div><div><div class="t">Abidi — 90 Days Success Plan &amp; M.A.S.T.E.R.</div><div class="s">13 weeks; each week = 1 module + 1 Power Principle + 1 non-negotiable weekly challenge + 5 Action Labs. Pillars: Mindset &amp; Identity, Action &amp; Discipline, Sales &amp; Influence, Treasury &amp; Wealth, Energy &amp; Equilibrium, Reputation &amp; Review. Phase 2 tools used here: 100% Rule, 5-Second Ignition, Accountability Mirror. His line: “You do not rise to the level of your goals; you fall to the level of your subconscious programming.” Course listed at PKR 15,000 prelaunch until 30 November (as listed on the page when researched). <span class="src">Source: Empowerers — <a href="https://learn.empowerers.co/trainings/90-days-success-plan/" target="_blank" rel="noopener">learn.empowerers.co/trainings/90-days-success-plan</a> (verified live in research).</span></div><div class="caveat"><strong>Caveat kept from the research:</strong> the internal chapters of Abidi's book <em>No Motivation Required</em> were <strong>not</strong> verifiable from open sources — no full text or contents page was found. SmartLife therefore uses only what the 90 Days page documents, plus the cover concept “Raise the Floor” and two social-post principles: “Action precedes motivation, not the reverse” and one small habit per week with a fixed wake time. Nothing else is claimed as Abidi's method.</div></div></div>
-      <div class="step"><div class="n">2</div><div><div class="t">James Clear — Atomic Habits: systems, identity votes, never miss twice</div><div class="s">“You do not rise to the level of your goals. You fall to the level of your systems.” Every check-in is a vote for the person you want to become — that is why each tick above adds to your identity-vote count. 1% better daily compounds to 1.01<sup>365</sup> ≈ 37.78× in a year — arithmetic in the summaries, not a measured law of human improvement, and the research flags it as such. Two-Minute Rule and habit stacking (“After [current habit], I will [new habit]”) are built into your cues and floor versions. <span class="src">Sources (index): <a href="https://habitbox.app/blog/atomic-habits-summary" target="_blank" rel="noopener">habitbox.app/blog/atomic-habits-summary</a> · <a href="https://conthubs.com/blog/atomic-habits-by-james-clear" target="_blank" rel="noopener">conthubs.com/blog/atomic-habits-by-james-clear</a> · <a href="https://lifestack.ai/blog/atomic-habits" target="_blank" rel="noopener">lifestack.ai/blog/atomic-habits</a></span></div></div></div>
-      <div class="step"><div class="n">3</div><div><div class="t">BJ Fogg — Tiny Habits: B = MAP</div><div class="s">Behaviour happens only when Motivation, Ability and a Prompt meet at the same moment — and motivation is the least reliable of the three. So SmartLife fixes ability first (floor versions doable on the worst day, under 2 minutes to start), prompt second (the cue), motivation last. Recipe: After I [anchor], I will [tiny habit] — then celebrate immediately; Fogg's claim is that the emotion is what wires the habit in. <span class="src">Sources (index): <a href="https://www.easyhabits.io/blog/tiny-habits-bj-fogg" target="_blank" rel="noopener">easyhabits.io/blog/tiny-habits-bj-fogg</a> · <a href="https://theconceptlibrary.com/concept/fogg-behavior-model" target="_blank" rel="noopener">theconceptlibrary.com/concept/fogg-behavior-model</a></span></div></div></div>
-      <div class="step"><div class="n">4</div><div><div class="t">Gollwitzer — implementation intentions roughly double follow-through</div><div class="s">Gollwitzer &amp; Sheeran (2006) meta-analysis of 94 studies: effect size d = 0.65 (medium-to-large) for a specific if–then plan — “When X happens, I will do Y” — versus a vague goal. That is why every non-negotiable in SmartLife is stored as After [cue], I will [action]. <span class="src">Sources (index): <a href="https://www.usecarly.com/blog/how-to-build-a-habit/" target="_blank" rel="noopener">usecarly.com/blog/how-to-build-a-habit</a> · <a href="https://breaktheordinary.com/how-to-build-good-habits/" target="_blank" rel="noopener">breaktheordinary.com/how-to-build-good-habits</a></span></div></div></div>
-      <div class="step"><div class="n">5</div><div><div class="t">Lally — habits take a median of 66 days, and one miss does not matter</div><div class="s">Lally et al. (UCL, 2010, <em>European Journal of Social Psychology</em>): median 66 days to automaticity, range 18–254 days — not 21 days. Missing a single day had no statistically significant effect. That is why SmartLife's streak is Never Miss Twice, why the 90-day cycle is the right length, and why Day 66 is marked on your challenge bar. <span class="src">Sources (index): same two habit-formation pages as step 4.</span></div></div></div>
-      <div class="step"><div class="n">6</div><div><div class="t">What was copied from the best apps — and what was fixed</div><div class="s">TickTick: the all-in-one bundle (tasks + calendar + habits + focus timer) and “Annoying Alerts” that keep ringing until done — copied as SmartLife's repeating ring. Todoist: one-line capture and P1–P4-style priorities. Structured: the visual timeline day and Replan for missed blocks. Forest: a plant that grows during focus and withers if you quit early. Habitica: a real consequence for misses — copied in miniature as your self-chosen consequence, not a full RPG. Streaks: one clear streak number — but its hard reset-to-zero was <em>fixed</em> to Never Miss Twice, because Lally's data says one miss should not reset anything. Google Keep: 5-second capture, labels and search (its location reminders were discontinued in late 2025, so SmartLife does not promise them). Splitwise / MemoGo: equal / exact Rs / percentage (must total 100%) / shares splits, separate groups, and simplify-debts fewest payments — with integer-paise, largest-remainder arithmetic so shares always sum exactly to the total (e.g. Rs 1,000 ÷ 3 = 333.34 + 333.33 + 333.33). YNAB: the Four Rules behind the envelopes above ($109/yr or $14.99/mo, 34-day trial, no free tier — the method is free here; prices are Oct–Nov 2026 snapshots from comparisons and will change). <span class="src">Sources (index): <a href="https://toolgpa.com/compare/ticktick-vs-todoist" target="_blank" rel="noopener">toolgpa.com/compare/ticktick-vs-todoist</a> · <a href="https://planyway.com/blog/what-is-the-best-planner-app" target="_blank" rel="noopener">planyway.com/blog/what-is-the-best-planner-app</a> · <a href="https://habithuddle.com/blog/gamified-habit-tracker" target="_blank" rel="noopener">habithuddle.com/blog/gamified-habit-tracker</a> · <a href="https://www.tapsmart.com/tips-and-tricks/splitwise-guide/" target="_blank" rel="noopener">tapsmart.com/tips-and-tricks/splitwise-guide</a> · <a href="https://memogo.com/memogo-the-easiest-solution-to-splitting-expenses-among-friends" target="_blank" rel="noopener">memogo.com</a> · <a href="https://www.spendtrails.com/blog/is-ynab-a-budget-app" target="_blank" rel="noopener">spendtrails.com/blog/is-ynab-a-budget-app</a></span></div></div></div>
-      <div class="step"><div class="n">7</div><div><div class="t">Voice alarms — the honest technical limits, and your “band phone” clarification</div><div class="s">Your clarification is built in: “band” means the phone is <strong>ON</strong> — screen off, locked, sleep mode, in your pocket, exactly like waiting for a call — <strong>not</strong> powered off. Internet or no internet makes no difference to anything on this page. Within that state, SmartLife does everything a web app can: it checks the time every second while it stays open in the background, rings, vibrates, shows a full-screen alert and speaks, repeating until Dismiss or Snooze. What no web page can do — and SmartLife does not fake — is ring after you swipe the app fully closed: the Notification Triggers API built for exactly that completed its origin trial and its Launch is still “Not started” on Chrome's own page; service workers are terminated ~30 seconds after idle (max ~5 minutes per event); timers freeze in background tabs; and a service worker has no voice or audio at all. Three independent 2026 reviews report Chrome's documentation as saying development “has ended”, but the fetched official page does <em>not</em> show that banner — the research flags this discrepancy, and the practical conclusion is identical either way: the API is not in shipping Chrome. The system Clock bridge below and Keep-awake mode are the v1 answers; a Capacitor Android shell (same code + native local notifications and TTS) is the planned v2 that removes the limit. <span class="src">Sources: Chrome — <a href="https://developer.chrome.com/docs/web-platform/notification-triggers" target="_blank" rel="noopener">developer.chrome.com/docs/web-platform/notification-triggers</a> (verified live) · MDN Wake Lock — <a href="https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API" target="_blank" rel="noopener">developer.mozilla.org</a> (verified live) · Capacitor — <a href="https://capacitorjs.com/docs/apis/local-notifications" target="_blank" rel="noopener">capacitorjs.com/docs/apis/local-notifications</a> (verified live) · service-worker lifetime — <a href="https://progressivewebapps.com/background/" target="_blank" rel="noopener">progressivewebapps.com/background</a> (index)</span></div><div class="caveat"><strong>Open questions, stated plainly:</strong> (1) Your city for automatic prayer times is not set — Aladhan (free, no key) with the University of Islamic Sciences, Karachi method (method 1, Fajr/Isha 18°/18°, Hanafi Asr) is the researched default for Pakistan, with PrayTimes.js as the offline calculator; until you pick a city, SmartLife keeps your editable anchor times instead of guessing. For reference only, the research recorded Islamabad on 2026-11-12 as Fajr 5:11, Sunrise 6:37, Dhuhr 11:52, Asr 3:29, Maghrib 5:07, Isha 6:33 PKT — do not treat those as your hostel's times. (2) Your phone model / Android version is unknown, and exact-alarm behaviour varies across Android 12–15. (3) Whether you want Play Store publishing (needs a $25 one-time developer account) is undecided — sideloading the v2 APK needs no account. (4) No live test was run on a real Android device during the research; the recommended first validation is a 10-minute device test — install, lock the screen, and wait for a scheduled test alarm below. (5) Beeminder/stickK effectiveness figures (30–50%, 3.2×) come from secondary sources that disagree, so SmartLife copies only the mechanism — loss aversion and a named partner — not the numbers; its pledge ladder ($5 → $10 → $30 → $90 → $270) is reported as the product's own pricing, and no real-money stakes are built into this free offline app.</div></div></div>
     </div>
 
     <div class="card"><h2>Your data at a glance</h2><div id="dataSummary"></div></div>
@@ -861,7 +850,7 @@ function toggleNN(id){
   var i=log.done.indexOf(id);
   var n=S.nonneg.find(function(x){return x.id===id;});
   if(i>=0){ log.done.splice(i,1); if(S.votes>0) S.votes--; }
-  else{ log.done.push(id); S.votes=(S.votes||0)+1; toast("✓ Vote #"+S.votes+" — “I am a person who does what he planned.” (Clear: every action is a vote for who you want to become. Fogg: celebrate now — the feeling wires the habit in.)"); }
+  else{ log.done.push(id); S.votes=(S.votes||0)+1; toast("✓ Vote #"+S.votes); }
   if(log.closed){ log.closed=false; log.missed=false; log.note=""; }
   renderAll();
 }
@@ -956,7 +945,7 @@ function renderToday(){
 
   /* non-negotiables */
   var doneN=nnDoneCount(t), totalN=S.nonneg.length;
-  $("nnList").innerHTML = totalN===0 ? '<p class="hint" style="padding-top:8px">No non-negotiables set yet. Add your first one with “+ Add non-negotiable” below — name, time, duration, cue and floor version, all yours to set.</p>' :
+  $("nnList").innerHTML = totalN===0 ? '<p class="hint" style="padding-top:8px">No non-negotiables set yet. Tap “+ Add non-negotiable”.</p>' :
     S.nonneg.map(function(n){ var d=(log.done||[]).indexOf(n.id)>=0;
       var meta='<div class="mono" style="font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.03em;margin-top:2px">'+(n.time?esc(n.time)+(n.dur?' · '+n.dur+' MIN':'')+' · VOICE ALARM · ':"")+'STREAK '+nnItemStreak(n.id)+'D</div>';
       var sub=meta+(n.cue?'<div class="s" style="color:var(--muted);font-size:13px">After: '+esc(n.cue)+'</div>':"")+(n.floor?'<div class="s" style="color:var(--muted);font-size:13px">Floor: '+esc(n.floor)+'</div>':"")+
@@ -997,9 +986,9 @@ function renderToday(){
     ch.innerHTML='<div class="t" style="font-weight:800;font-size:16px">'+esc(S.challenge.title)+'</div>'+
       '<div style="display:flex;align-items:baseline;gap:10px;margin-top:6px"><span class="streakbig" style="font-size:34px">Day '+Math.max(1,cd)+'</span><span class="hint">of '+tot+' · Week '+wkNum+' of 13 · started '+fmtDate(S.challenge.start)+'</span></div>'+
       '<div class="bar"><i style="width:'+pct+'%"></i></div>'+
-      '<p class="hint" style="margin-top:6px">Day 66 marker: Lally et al. found a <strong>median of 66 days</strong> to automaticity (range 18–254) — passing day 66 is when it starts feeling automatic for most people. '+(cd>=66?'You are past the median — protect it.':(66-Math.max(1,cd))+' days to the median.')+'</p>'+
+      '<p class="hint" style="margin-top:6px">Day 66 — past the median habit-formation point. '+(cd>=66?'You are past the median — protect it.':(66-Math.max(1,cd))+' days to the median.')+'</p>'+
       (S.weekHabit? '<p class="hint" style="margin-top:4px">This week\'s ONE new habit: <strong>'+esc(S.weekHabit)+'</strong> — one per week only (Abidi: 12 habits in 12 weeks).</p>' : '<p class="hint" style="margin-top:4px">Set this week\'s ONE new habit in Morning Priming above — one per week only.</p>')+
-      (cd>=90? '<div class="caveat" style="margin-top:8px"><strong>Day 90 — After-Action Review (Abidi, Week 13):</strong> What worked? What failed? What will the next 90 days keep, drop, and add? Write it in Notes, set a new North Star, and start the next cycle.</div>' : "")+
+      (cd>=90? '<div class="caveat" style="margin-top:8px"><strong>Day 90 — After-Action Review:</strong> Write what worked and what failed in Notes, set a new North Star, start the next cycle.</div>' : "")+
       '<p class="hint" style="margin-top:8px">'+checkCount+' daily check-ins logged.</p>'+
       (cd>tot? '<p class="hint" style="font-weight:700;margin-top:6px">Challenge period complete.</p>' :
         checkedToday? '<p class="hint" style="font-weight:700;margin-top:6px">Checked in today. Done.</p>' :
@@ -1264,7 +1253,7 @@ function renderGoals(){
   document.querySelectorAll("[data-icat]").forEach(function(sel){ sel.addEventListener("change",function(){ var it=S.ideas.find(function(x){return x.id===sel.getAttribute("data-icat");}); if(it){ if(sel.value==="In progress"&&!it.nextStep){ toast("Promotion rule: an idea moves to In Progress only with a next tiny step — this one has none yet, so it stays in "+(it.category||"To do")+"."); renderAll(); return; } it.category=sel.value; toast("Idea moved to "+sel.value); renderAll(); } }); });
   document.querySelectorAll("[data-promote]").forEach(function(b){ b.addEventListener("click",function(){
     var it=S.ideas.find(function(x){return x.id===b.getAttribute("data-promote");}); if(!it)return;
-    if(!it.nextStep){ toast("Promotion rule: this idea has no next tiny step yet, so it stays parked. Save it again with a tiny first step (under 2 minutes to start), then promote it. “Future” is a legitimate parking place, not a graveyard."); return; }
+    if(!it.nextStep){ toast("Add a tiny first step (under 2 minutes), then promote it."); return; }
     S.goals.push({id:nid(),title:it.title,category:"From idea",target:"",progress:0,status:"active",milestones:it.nextStep?[{text:it.nextStep,done:false}]:[]});
     S.ideas=S.ideas.filter(function(x){return x.id!==it.id;});
     toast("Idea is now a tracked goal — first milestone is its tiny step"); renderAll();
@@ -1813,7 +1802,7 @@ function drawTimer(){
   var tree=$("forestTree"), lbl=$("forestLbl"); if(!tree||!lbl) return;
   var target=nnFocusTarget? nnFocusTarget.dur*60 : 40*60;
   var name=nnFocusTarget? nnFocusTarget.title : "this block";
-  if(tSec===0&&!tRun){ tree.textContent="🌱"; lbl.textContent=nnFocusTarget?("Seed planted for "+name+" — target "+nnFocusTarget.dur+" min"):"Seed planted — start a block to grow it"; return; }
+  if(tSec===0&&!tRun){ tree.textContent="🌱"; lbl.textContent=nnFocusTarget?("Seed planted for "+name+" — target "+nnFocusTarget.dur+" min"):"Not started."; return; }
   if(tSec<120){ tree.textContent="🌱"; lbl.textContent="Seed sprouting — "+name+": stay, don't leave"; }
   else if(tSec<600){ tree.textContent="🌿"; lbl.textContent="Sprout growing — "+Math.floor(tSec/60)+" min in"; }
   else if(tSec<target){ tree.textContent="🌳"; lbl.textContent="Tree growing — "+Math.floor(tSec/60)+" of "+Math.round(target/60)+" min"; }
@@ -1865,8 +1854,8 @@ function weekStats(){
 }
 function weekSuggestion(ws){
   if(ws.nnPossible===0&&ws.pMarked===0&&ws.focusMin===0&&ws.goalsActive===0&&ws.goalsDone===0&&ws.clean===0&&ws.missedClosed===0) return "Not enough logged yet to judge this week — add your non-negotiables, mark your prayers, and close a day or two, and this summary starts telling the truth about your patterns.";
-  if(ws.weakest&&ws.elapsed>=2&&ws.weakest.done<ws.elapsed*0.5) return "Next week, make the floor version of “"+ws.weakest.n.title+"”"+(ws.weakest.n.floor?" (“"+ws.weakest.n.floor+"”)":"")+" the whole job — it was done on only "+ws.weakest.done+" of "+ws.elapsed+" days. Smaller beats skipped (Fogg: fix ability first).";
-  if(ws.missedClosed>0) return "One day closed with misses this week — that is a gap, not a failure (Lally: one miss has no significant effect). Protect tomorrow: floor versions first, nothing new added.";
+  if(ws.weakest&&ws.elapsed>=2&&ws.weakest.done<ws.elapsed*0.5) return "Next week, make the floor version of “"+ws.weakest.n.title+"”"+(ws.weakest.n.floor?" (“"+ws.weakest.n.floor+"”)":"")+" the whole job — it was done on only "+ws.weakest.done+" of "+ws.elapsed+" days. Smaller beats skipped.";
+  if(ws.missedClosed>0) return "One day closed with misses — a gap, not a failure. Tomorrow: floor versions first, nothing new.";
   if(ws.focusMin===0&&ws.goalsActive>0) return "No focus minutes logged this week while "+ws.goalsActive+" goal(s) are active. Restart with a single 2-minute floor block tomorrow — starting tiny is the system, not a compromise.";
   if(ws.pMarked>0&&ws.pOn<ws.pMarked*0.6) return "Prayers were marked "+ws.pMarked+" times but only "+ws.pOn+" on time. Pick the one prayer that slips most and anchor it to the block right before it.";
   return "Steady week. Keep the same set — do not add a second new habit this week (Abidi: one habit per week). Raise one goal's progress instead.";
@@ -1914,7 +1903,7 @@ function buildCoachContext(){
   if(S.partner&&S.partner.name) lines.push("Accountability partner: "+S.partner.name+". Self-chosen consequence for missing twice: "+(S.partner.note||"—"));
   return lines.join("\n");
 }
-var COACH_SYSTEM="You are SmartLife Coach, inside a no-motivation-required discipline app. Rules you never break: (1) Never claim you did something you did not do — you cannot add, edit, delete, tick or save anything in the app; if the user asks you to change app data, tell them the exact button or screen to tap themselves. (2) Never invent numbers — use only the data provided below. (3) Answer like a firm, kind coach: short paragraphs, one clear next action, floor versions over guilt, systems over motivation lectures. The user's known science: James Clear (never miss twice, identity votes), BJ Fogg (tiny habits, fix ability first), Abidi (one habit per week, floor first). Here is the user's real data:\n";
+var COACH_SYSTEM="You are SmartLife Coach, inside a no-motivation-required discipline app. Rules you never break: (1) Never claim you did something you did not do — you cannot add, edit, delete, tick or save anything in the app; if the user asks you to change app data, tell them the exact button or screen to tap themselves. (2) Never invent numbers — use only the data provided below. (3) Answer like a firm, kind coach: under 80 words, one clear next action, floor versions over guilt. Here is the user's real data:\n";
 function fetchTimeout(url,opts,ms){
   var ctrl=("AbortController" in window)?new AbortController():null;
   if(ctrl){ opts=opts||{}; opts.signal=ctrl.signal; var to=setTimeout(function(){ ctrl.abort(); },ms||30000); return fetch(url,opts).then(function(r){ clearTimeout(to); return r; },function(e){ clearTimeout(to); throw e; }); }
@@ -1944,18 +1933,18 @@ function offlineCoachReply(q){
   var remaining=S.nonneg.filter(function(n){ return ((S.daylog[t]||{done:[]}).done||[]).indexOf(n.id)<0; });
   if(s.indexOf("week")>=0||s.indexOf("review")>=0||s.indexOf("summary")>=0) return "Here is your week, from your own logs:\n\n"+weeklySummaryText()+"\n\nMy one push: "+weekSuggestion(ws);
   if(s.indexOf("miss")>=0||s.indexOf("why")>=0||s.indexOf("slip")>=0||s.indexOf("quit")>=0){
-    if(ws.weakest&&ws.elapsed>=1) return "Honest answer, from your data: the one that slips most is “"+ws.weakest.n.title+"” — done "+ws.weakest.done+" of "+ws.elapsed+" days this week. It is not a motivation problem; the step is too big or the cue is weak (Fogg: fix ability first). Make its floor version"+(ws.weakest.n.floor?" (“"+ws.weakest.n.floor+"”)":" — open it for 2 minutes")+" the whole job this week, and tie it to: "+(ws.weakest.n.cue||"a fixed time on your timetable")+". One miss is a gap — never miss twice is the only streak rule that matters.";
+    if(ws.weakest&&ws.elapsed>=1) return "Honest answer, from your data: the one that slips most is “"+ws.weakest.n.title+"” — done "+ws.weakest.done+" of "+ws.elapsed+" days this week. The step is too big or the cue is weak. Make its floor version"+(ws.weakest.n.floor?" (“"+ws.weakest.n.floor+"”)":" — open it for 2 minutes")+" the whole job this week, and tie it to: "+(ws.weakest.n.cue||"a fixed time on your timetable")+".";
     return "Your logs are too new to name a pattern yet — tick or close a few days first and Coach can point at the exact weak spot. Until then: today's floor versions are the whole job.";
   }
   if(s.indexOf("break")>=0||s.indexOf("step")>=0||s.indexOf("tiny")>=0){
     var g=S.goals.find(function(x){ return x.status==="active"; }); var target=g?g.title:(remaining.length?remaining[0].title:"your next goal");
     var ms=g?msNorm(g).filter(function(m){ return !m.done; }):[];
-    return "Breaking “"+target+"” down the SmartLife way:\n1 · The 2-minute start: "+(ms.length?("“"+ms[0].text+"” — just open it and begin"): "open the material and read the first heading")+". Starting counts.\n2 · One 25–40 minute focus block (use the Focus timer on Today) — phone in another room.\n3 · Stop on time and tick it. The tick is the reward (Fogg: celebrate — the feeling wires the habit).\n4 · Tomorrow, same cue, same time. Small, daily, boring — that is the system working.";
+    return "Breaking “"+target+"” down the SmartLife way:\n1 · The 2-minute start: "+(ms.length?("“"+ms[0].text+"” — just open it and begin"): "open the material and read the first heading")+". Starting counts.\n2 · One 25–40 minute focus block (use the Focus timer on Today) — phone in another room.\n3 · Stop on time and tick it. The tick is the reward .\n4 · Tomorrow, same cue, same time. ";
   }
-  if(s.indexOf("money")>=0||s.indexOf("cash")>=0||s.indexOf("spend")>=0) return "From your personal records this week: in "+rs(ws.cin)+", out "+rs(ws.cout)+", net "+rs(ws.cin-ws.cout)+". This month's envelopes are in Money → Personal records — assign every rupee until Ready to Assign = Rs 0 (YNAB Rule 1). If one envelope overspends, move money consciously — Rule 3, Roll With the Punches, no guilt.";
+  if(s.indexOf("money")>=0||s.indexOf("cash")>=0||s.indexOf("spend")>=0) return "From your personal records this week: in "+rs(ws.cin)+", out "+rs(ws.cout)+", net "+rs(ws.cin-ws.cout)+". Envelopes are in Money → Personal records.";
   if(s.indexOf("plan")>=0||s.indexOf("day")>=0||s.indexOf("today")>=0||s.indexOf("schedule")>=0){
     var planLines=S.anchor.slice().sort(function(a,b){ return a.start<b.start?-1:1; }).slice(0,10).map(function(a){ return a.start+" — "+a.title; }).join("\n");
-    return "Your day, in order — the timetable decides, not your mood:\n"+planLines+"\n\nStill open today: "+(remaining.length?remaining.map(function(n){ return n.title+(n.floor?" (floor: "+n.floor+")":""); }).join("; "):"nothing — all non-negotiables done. Close the day on Today.")+"\nStart with the first open one at its set time. Floor version counts, full stop.";
+    return "Your day, in order:\n"+planLines+"\n\nStill open today: "+(remaining.length?remaining.map(function(n){ return n.title+(n.floor?" (floor: "+n.floor+")":""); }).join("; "):"nothing — all non-negotiables done. Close the day on Today.")+"\n";
   }
   return "From your data right now: streak "+currentStreak()+" days, "+nnDoneCount(t)+" of "+S.nonneg.length+" non-negotiables done today, this week at "+ws.nnPct+"%.\n\n"+(remaining.length?("The smallest action that still counts today: “"+remaining[0].title+"”"+(remaining[0].floor?" — floor version: "+remaining[0].floor:" — 2 minutes of it")+". Do that one thing at "+(remaining[0].time||"the next free block")+", tick it, and the day is protected."):"Everything is done today — close the day on Today and let the streak count it.")+"\n\n(You are seeing an on-phone answer — no internet needed. For a fuller reply, ask again when you are online.)";
 }
@@ -1992,7 +1981,7 @@ function renderCoach(){
   var ws=weekStats(); var suggs=coachSuggestions();
   if(teaser) teaser.textContent="This week: "+ws.nnPct+"% of non-negotiables done · streak "+currentStreak()+" days · "+(S.coachMemory||[]).length+" memory note(s) approved · "+suggs.length+" suggestion(s) waiting for your approval.";
   var chat=$("coachChat"); if(!chat) return;
-  chat.innerHTML = S.coachChat.length===0 ? '<div class="msg coach"><div class="who">Coach</div><div class="txt">Ask me to plan your day, break a goal into tiny steps, or explain what your own logs say about why things slip. I only advise — I never change or delete anything in SmartLife myself.</div></div>' :
+  chat.innerHTML = S.coachChat.length===0 ? '<div class="msg coach"><div class="who">Coach</div><div class="txt">Plan your day, break a goal into tiny steps, or ask why things slip. I only advise — I never change or delete anything.</div></div>' :
     S.coachChat.map(function(m){ return '<div class="msg '+(m.role==="me"?"me":"coach")+'"><div class="who">'+(m.role==="me"?"You":"Coach"+(m.via?" · "+esc(m.via):""))+'</div><div class="txt">'+esc(m.text)+'</div></div>'; }).join("");
   var inp=$("coachInput"); if(inp&&document.activeElement!==inp) inp.value=coachDraft;
   var sendBtn=$("coachSend"); if(sendBtn){ sendBtn.disabled=coachBusy; sendBtn.textContent=coachBusy?"Coach is thinking…":"Send to Coach"; }
@@ -2272,7 +2261,7 @@ function renderVoiceDiag(){
 }
 function renderVoice(){
   var en=!!S.voice.enabled;
-  $("voiceStatus").textContent = en ? "Voice is ON. Keep SmartLife open in the background (don’t swipe it away) — it rings and speaks at each time below, internet or no internet." : "Voice is off. Turn it on once and keep SmartLife open in the background — it rings and speaks at each block, no internet needed.";
+  $("voiceStatus").textContent = en ? "Voice is ON. Keep SmartLife open in the background (don’t swipe it away) — it rings and speaks at each time below, internet or no internet." : "Voice is off. Turn it on once.";
   $("voiceEnableBtn").textContent = en ? "Voice alarms are ON ✓" : "Enable voice alarms";
   var info=nextAlarmInfo();
   $("voiceNext").textContent = info ? ("Next: "+info.alarm.time+" — "+info.alarm.title) : "No alarm times set — add anchor blocks or a custom alarm";
